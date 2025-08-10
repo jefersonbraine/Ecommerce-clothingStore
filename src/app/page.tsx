@@ -31,7 +31,7 @@ const Home = async () => {
     <>
       <Header />
       <div className="space-y-6">
-        <div className="px-5">
+        <div>
           <Image
             src="/banner-01.png"
             alt="Leve uma vida com estilo"
