@@ -5,19 +5,18 @@ import { notFound } from "next/navigation";
 import Footer from "@/components/common/footer";
 import { Header } from "@/components/common/header";
 import ProductList from "@/components/common/product-list";
-import { Button } from "@/components/ui/button";
 import { db } from "@/db";
 import { productTable, productVariantTable } from "@/db/schema";
 import { formatCentsToBRL } from "@/helpers/money";
 
-import QuantitySelector from "./components/quantity-selector";
+import ProductActions from "./components/product-actions";
 import VariantSelector from "./components/variant-selector";
 
 interface ProductVariantPageProps {
   params: Promise<{ slug: string }>;
 }
 
-const ProductPage = async ({ params }: ProductVariantPageProps) => {
+const ProductVariantPage = async ({ params }: ProductVariantPageProps) => {
   const { slug } = await params;
   const productVariant = await db.query.productVariantTable.findFirst({
     where: eq(productVariantTable.slug, slug),
@@ -38,22 +37,20 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
       variants: true,
     },
   });
-
   return (
     <>
       <Header />
       <div className="flex flex-col space-y-6">
-        {/* IMAGEM */}
         <Image
           src={productVariant.imageUrl}
           alt={productVariant.name}
           sizes="100vw"
-          width={0}
           height={0}
-          className="h-auto w-full"
+          width={0}
+          className="h-auto w-full object-cover"
         />
+
         <div className="px-5">
-          {/* VARIANTES */}
           <VariantSelector
             selectedVariantSlug={productVariant.slug}
             variants={productVariant.product.variants}
@@ -61,7 +58,7 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
         </div>
 
         <div className="px-5">
-          {/* NOME E PRODUTO  */}
+          {/* DESCRIÇÃO */}
           <h2 className="text-lg font-semibold">
             {productVariant.product.name}
           </h2>
@@ -72,27 +69,16 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
             {formatCentsToBRL(productVariant.priceInCents)}
           </h3>
         </div>
+
+        <ProductActions productVariantId={productVariant.id} />
+
         <div className="px-5">
-          {/* QUANTIDADE */}
-          <QuantitySelector />
-        </div>
-        <div className="flex flex-col space-y-4 px-5">
-          {/* BOTÕES */}
-          <Button className="rounded-full" size="lg" variant="outline">
-            Adicionar à sacola
-          </Button>
-          <Button className="rounded-full" size="lg">
-            Comprar agora
-          </Button>
-        </div>
-        <div className="px-5">
-          <p className="text-sm">{productVariant.product.description}</p>
+          <p className="text-shadow-amber-600">
+            {productVariant.product.description}
+          </p>
         </div>
 
-        <ProductList
-          title="Talvez você também goste"
-          products={likelyProducts}
-        />
+        <ProductList title="Talvez você goste" products={likelyProducts} />
 
         <Footer />
       </div>
@@ -100,4 +86,4 @@ const ProductPage = async ({ params }: ProductVariantPageProps) => {
   );
 };
 
-export default ProductPage;
+export default ProductVariantPage;
