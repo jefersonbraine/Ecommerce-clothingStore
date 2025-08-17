@@ -1,0 +1,87 @@
+"use server";
+
+import { eq } from "drizzle-orm";
+import { headers } from "next/headers";
+// import Stripe from "stripe";
+
+import { db } from "@/db";
+import { orderItemTable, orderTable, productVariantTable } from "@/db/schema";
+import { auth } from "@/lib/auth";
+
+import {
+  CreateCheckoutSessionSchema,
+  createCheckoutSessionSchema,
+} from "./schema";
+
+export const createCheckoutSession = async (
+  data: CreateCheckoutSessionSchema,
+) => {
+  // For development purposes, we'll bypass the Stripe key check
+  // Comment this back in when you have real Stripe keys
+  // if (!process.env.STRIPE_SECRET_KEY) {
+  //   throw new Error("Stripe secret key is not set");
+  // }
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+  if (!session?.user) {
+    throw new Error("Unauthorized");
+  }
+  const { orderId } = createCheckoutSessionSchema.parse(data);
+  const order = await db.query.orderTable.findFirst({
+    where: eq(orderTable.id, orderId),
+  });
+  if (!order) {
+    throw new Error("Order not found");
+  }
+  if (order.userId !== session.user.id) {
+    throw new Error("Unauthorized");
+  }
+  const orderItems = (await db.query.orderItemTable.findMany({
+    where: eq(orderItemTable.orderId, orderId),
+    with: {
+      productVariant: { with: { product: true } },
+    },
+  })) as Array<{
+    productVariant: {
+      product: { name: string; description: string };
+      name: string;
+      imageUrl: string;
+    };
+    priceInCents: number;
+    quantity: number;
+  }>;
+  const stripe = new Stripe(
+    process.env.STRIPE_SECRET_KEY || "sk_test_mock_key_for_development",
+  );
+  const checkoutSession = await stripe.checkout.sessions.create({
+    payment_method_types: ["card"],
+    mode: "payment",
+    success_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/success`,
+    cancel_url: `${process.env.NEXT_PUBLIC_APP_URL}/checkout/cancel`,
+    metadata: {
+      orderId,
+    },
+    line_items: orderItems.map((orderItem) => {
+      const product = orderItem.productVariant.product ?? {
+        name: "Produto",
+        description: "",
+        imageUrl: "",
+      };
+      return {
+        price_data: {
+          currency: "brl",
+          product_data: {
+            name: `${product.name} - ${orderItem.productVariant.name}`,
+            description: product.description,
+            images: [orderItem.productVariant.imageUrl],
+          },
+          // Em centavos
+          unit_amount: orderItem.priceInCents,
+        },
+        quantity: orderItem.quantity,
+      };
+    }),
+  });
+  return checkoutSession;
+};

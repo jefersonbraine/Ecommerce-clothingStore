@@ -6,7 +6,7 @@ import BrandList from "@/components/common/brand-list";
 import CategorySelector from "@/components/common/category-selector";
 import Footer from "@/components/common/footer";
 import { Header } from "@/components/common/header";
-import ProductList from "@/components/common/product-list";
+import { ProductList } from "@/components/common/products-list";
 import { db } from "@/db";
 import { productTable } from "@/db/schema";
 

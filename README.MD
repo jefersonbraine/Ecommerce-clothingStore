@@ -1,36 +1,101 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# E-commerce Full Stack
+
+Este é um projeto de e-commerce completo desenvolvido com Next.js 15, TypeScript, Tailwind CSS, Drizzle ORM e Stripe para pagamentos.
+
+## Funcionalidades
+
+- 🛍️ **Catálogo de Produtos**: Navegação por categorias e produtos
+- 🛒 **Carrinho de Compras**: Adicionar, remover e gerenciar produtos
+- 💳 **Checkout com Stripe**: Processamento de pagamentos seguro
+- 🔐 **Autenticação**: Sistema de login e cadastro
+- 📦 **Gestão de Pedidos**: Acompanhamento de status dos pedidos
+- 📱 **Design Responsivo**: Interface otimizada para todos os dispositivos
+
+## Configuração
+
+### Variáveis de Ambiente
+
+Crie um arquivo `.env.local` na raiz do projeto com as seguintes variáveis:
+
+```bash
+# Stripe Configuration
+STRIPE_SECRET_KEY=sk_test_...
+STRIPE_WEBHOOK_SECRET=whsec_...
+NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY=pk_test_...
+
+# Database
+DATABASE_URL=postgresql://...
+
+# Auth
+AUTH_SECRET=...
+```
+
+### Instalação
+
+1. Instale as dependências:
+```bash
+npm install
+```
+
+2. Configure o banco de dados:
+```bash
+npm run db:generate
+npm run db:push
+npm run db:seed
+```
+
+3. Execute o servidor de desenvolvimento:
+```bash
+npm run dev
+```
+
+Abra [http://localhost:3000](http://localhost:3000) no seu navegador para ver o resultado.
 
 ## Getting Started
 
-First, run the development server:
+## Tecnologias Utilizadas
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+- **Frontend**: Next.js 15, React 19, TypeScript, Tailwind CSS
+- **Backend**: Next.js API Routes, Drizzle ORM
+- **Banco de Dados**: PostgreSQL
+- **Autenticação**: Better Auth
+- **Pagamentos**: Stripe
+- **Estado**: TanStack Query (React Query)
+- **UI Components**: Radix UI, shadcn/ui
+
+## Estrutura do Projeto
+
 ```
-
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+src/
+├── app/                    # App Router do Next.js
+│   ├── api/               # API Routes
+│   ├── authentication/     # Páginas de autenticação
+│   ├── cart/              # Páginas do carrinho
+│   ├── category/          # Páginas de categoria
+│   ├── checkout/          # Páginas de checkout
+│   ├── my-orders/         # Páginas de pedidos
+│   └── product-variant/   # Páginas de produto
+├── components/             # Componentes reutilizáveis
+├── db/                    # Configuração do banco de dados
+├── hooks/                 # Custom hooks
+├── lib/                   # Utilitários e configurações
+└── providers/             # Providers do React
+```
 
 ## Learn More
 
-To learn more about Next.js, take a look at the following resources:
+Para aprender mais sobre as tecnologias utilizadas:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- [Next.js Documentation](https://nextjs.org/docs)
+- [Drizzle ORM](https://orm.drizzle.team/)
+- [Stripe Documentation](https://stripe.com/docs)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Better Auth](https://auth.better-auth.com/)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy
 
-## Deploy on Vercel
+O projeto pode ser facilmente deployado na [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme).
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Contribuição
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.

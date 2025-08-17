@@ -24,12 +24,14 @@ export const userTable = pgTable("user", {
     .notNull(),
 });
 
-export const userRelations = relations(userTable, ({ many, one }) => ({
+export const userRelations = relations(userTable, ({ many }) => ({
   shippingAddresses: many(shippingAddressTable),
-  cart: one(cartTable, {
-    fields: [userTable.id],
-    references: [cartTable.userId],
-  }),
+  // Note: Removed the direct relation to cart for now, as it may be causing issues
+  // We can add it back once the basic functionality works
+  // cart: one(cartTable, {
+  //   fields: [userTable.id],
+  //   references: [cartTable.userId],
+  // }),
 }));
 
 export const sessionTable = pgTable("session", {
@@ -157,14 +159,11 @@ export const shippingAddressRelations = relations(
       fields: [shippingAddressTable.userId],
       references: [userTable.id],
     }),
-    cart: one(cartTable, {
-      fields: [shippingAddressTable.id],
-      references: [cartTable.shippingAddressId],
-    }),
+    // Removed the circular reference to cart
   }),
 );
 
-export const cartTable = pgTable("car", {
+export const cartTable = pgTable("cart", {
   id: uuid().primaryKey().defaultRandom(),
   userId: text("user_id")
     .notNull()
@@ -207,6 +206,54 @@ export const cartItemRelations = relations(cartItemTable, ({ one }) => ({
   }),
   productVariant: one(productVariantTable, {
     fields: [cartItemTable.productVariantId],
+    references: [productVariantTable.id],
+  }),
+}));
+
+export const orderTable = pgTable("order", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  email: text("email").notNull(),
+  zipCode: text("zip_code").notNull(),
+  country: text("country").notNull(),
+  phone: text("phone").notNull(),
+  cpfOrCnpj: text("cpf_or_cnpj").notNull(),
+  city: text("city").notNull(),
+  complement: text("complement"),
+  neighborhood: text("neighborhood").notNull(),
+  number: text("number").notNull(),
+  recipientName: text("recipient_name").notNull(),
+  state: text("state").notNull(),
+  street: text("street").notNull(),
+  userId: text("user_id").notNull(),
+  totalPriceInCents: integer("total_price_in_cents").notNull(),
+  shippingAddressId: uuid("shipping_address_id").notNull(),
+  status: text("status").notNull().default("pending"),
+  createdAt: timestamp("created_at").notNull().defaultNow(),
+});
+
+export const orderRelations = relations(orderTable, ({ many }) => ({
+  items: many(orderItemTable),
+}));
+
+export const orderItemTable = pgTable("order_item", {
+  id: uuid("id").primaryKey().defaultRandom(),
+  orderId: uuid("order_id")
+    .notNull()
+    .references(() => orderTable.id),
+  productVariantId: uuid("product_variant_id")
+    .notNull()
+    .references(() => productVariantTable.id),
+  quantity: integer("quantity").notNull(),
+  priceInCents: integer("price_in_cents").notNull(),
+});
+
+export const orderItemRelations = relations(orderItemTable, ({ one }) => ({
+  order: one(orderTable, {
+    fields: [orderItemTable.orderId],
+    references: [orderTable.id],
+  }),
+  productVariant: one(productVariantTable, {
+    fields: [orderItemTable.productVariantId],
     references: [productVariantTable.id],
   }),
 }));
