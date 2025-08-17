@@ -43,6 +43,7 @@ const Cart = () => {
                   <div key={item.id} className="space-y-4 px-2">
                     <CartItem
                       id={item.id}
+                      productVariantId={item.productVariant.id}
                       productName={item.productVariant.product.name}
                       productVariantName={item.productVariant.name}
                       productVariantImageUrl={item.productVariant.imageUrl}
