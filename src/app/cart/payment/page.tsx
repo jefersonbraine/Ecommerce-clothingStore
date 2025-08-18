@@ -47,40 +47,42 @@ const PaymentPage = async () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex-1">
-        <div className="space-y-4 px-5 lg:px-8 lg:py-6">
-          <div className="mx-auto space-y-4 lg:grid lg:grid-cols-3 lg:gap-8 lg:space-y-0">
-            <div className="lg:col-span-2">
-              <Card>
-                <CardHeader>
-                  <CardTitle>Identificação</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <Card>
-                    <CardContent>
-                      <p className="text-sm">
-                        {formatAddress(cart.shippingAddress)}
-                      </p>
-                    </CardContent>
-                  </Card>
-                  <PaymentFinishOrderButton />
-                </CardContent>
-              </Card>
-            </div>
-            <div className="lg:col-span-1">
-              <CartSummary
-                subtotalInCents={cartTotalInCents}
-                totalInCents={cartTotalInCents}
-                products={cart.items.map((item) => ({
-                  id: item.productVariant.id,
-                  name: item.productVariant.product.name,
-                  variantName: item.productVariant.name,
-                  quantity: item.quantity,
-                  priceInCents: item.productVariant.priceInCents,
-                  imageUrl: item.productVariant.imageUrl,
-                }))}
-              />
-            </div>
+      <div className="container mx-auto px-5 pb-10">
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
+          {/* Left column - Payment information */}
+          <div className="md:max-w-3xl md:flex-1">
+            <h1 className="mb-6 text-2xl font-bold md:text-3xl">Pagamento</h1>
+            <Card>
+              <CardHeader>
+                <CardTitle>Endereço de Entrega</CardTitle>
+              </CardHeader>
+              <CardContent className="space-y-6">
+                <Card>
+                  <CardContent>
+                    <p className="text-sm">
+                      {formatAddress(cart.shippingAddress)}
+                    </p>
+                  </CardContent>
+                </Card>
+                <PaymentFinishOrderButton />
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Right column - Order Summary */}
+          <div className="md:w-80 md:flex-shrink-0 lg:w-96">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
           </div>
         </div>
       </div>

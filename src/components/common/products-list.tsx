@@ -14,12 +14,14 @@ interface ProductListProps {
     variants: (typeof productVariantTable.$inferSelect)[];
   })[];
   category?: string;
+  displayType?: "carousel" | "grid";
 }
 
 export function ProductList({
   title,
   products,
   category = "all",
+  displayType = "carousel", // Por padrão, usamos carrossel (para manter compatibilidade)
 }: ProductListProps) {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
@@ -65,63 +67,92 @@ export function ProductList({
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between px-5 md:px-0">
-        <h3 className="text-lg font-semibold">{title}</h3>
-        <Link
-          href={`/category/${category}`}
-          className="flex items-center text-sm hover:underline"
+      <div
+        className={`flex items-center justify-between px-5 md:px-0 ${displayType === "grid" ? "mx-auto max-w-screen-xl" : ""}`}
+      >
+        <h3
+          className={`${displayType === "grid" ? "text-2xl font-bold md:text-3xl" : "text-lg font-semibold"}`}
         >
-          Ver todos <ChevronRightIcon className="h-4 w-4" />
-        </Link>
-      </div>
-
-      <div className="relative">
-        {/* Botão de navegação para esquerda */}
-        {canScrollLeft && (
-          <button
-            onClick={handleScrollLeft}
-            className="absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:bg-gray-50 md:block"
-            aria-label="Rolar para esquerda"
+          {title}
+        </h3>
+        {/* Mostrar botão "Ver todos" apenas quando não estiver na página de categoria (displayType === "carousel") */}
+        {displayType === "carousel" && (
+          <Link
+            href={`/category/${category}`}
+            className="flex items-center text-sm hover:underline"
           >
-            <ChevronRightIcon className="h-6 w-6 rotate-180" />
-          </button>
+            Ver todos <ChevronRightIcon className="h-4 w-4" />
+          </Link>
         )}
+      </div>
+      {/* Removido bloco de texto duplicado já que agora está na página de categoria */}
 
-        {/* Container com width ajustado para carrossel */}
-        <div className="overflow-hidden px-5 md:px-8">
-          <div className="md:relative md:w-full">
-            <div
-              ref={scrollContainerRef}
-              className="scrollbar-hide flex w-full snap-x gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden"
-              style={{ scrollSnapType: "x mandatory" }}
-              onScroll={updateScrollButtons}
+      {displayType === "carousel" ? (
+        // Exibição em carrossel
+        <div className="relative">
+          {/* Botão de navegação para esquerda */}
+          {canScrollLeft && (
+            <button
+              onClick={handleScrollLeft}
+              className="absolute top-1/2 left-0 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:bg-gray-50 md:block"
+              aria-label="Rolar para esquerda"
             >
+              <ChevronRightIcon className="h-6 w-6 rotate-180" />
+            </button>
+          )}
+
+          {/* Container com width ajustado para carrossel */}
+          <div className="overflow-hidden px-5 md:px-8">
+            <div className="md:relative md:w-full">
+              <div
+                ref={scrollContainerRef}
+                className="scrollbar-hide flex w-full snap-x gap-8 overflow-x-auto [&::-webkit-scrollbar]:hidden"
+                style={{ scrollSnapType: "x mandatory" }}
+                onScroll={updateScrollButtons}
+              >
+                {products.map((product) => (
+                  <div
+                    key={product.id}
+                    className="w-[180px] flex-shrink-0 snap-start md:w-[260px]"
+                  >
+                    <ProductItem
+                      product={product}
+                      textContainerClassName="max-w-none"
+                    />
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
+          {/* Botão de navegação para direita */}
+          {canScrollRight && (
+            <button
+              onClick={handleScrollRight}
+              className="absolute top-1/2 right-0 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:bg-gray-50 md:block"
+              aria-label="Rolar para direita"
+            >
+              <ChevronRightIcon className="h-6 w-6" />
+            </button>
+          )}
+        </div>
+      ) : (
+        // Exibição em grid centralizado para páginas de categoria
+        <div className="px-5 py-4 md:px-8 md:py-6">
+          <div className="mx-auto max-w-screen-xl">
+            <div className="grid grid-cols-2 justify-items-center gap-4 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4">
               {products.map((product) => (
-                <div
-                  key={product.id}
-                  className="w-[180px] flex-shrink-0 snap-start md:w-[260px]"
-                >
+                <div key={product.id} className="w-full p-2">
                   <ProductItem
                     product={product}
-                    textContainerClassName="max-w-none"
+                    textContainerClassName="max-w-none mt-4"
                   />
                 </div>
               ))}
             </div>
           </div>
         </div>
-
-        {/* Botão de navegação para direita */}
-        {canScrollRight && (
-          <button
-            onClick={handleScrollRight}
-            className="absolute top-1/2 right-0 z-10 hidden -translate-y-1/2 rounded-full bg-white p-2 shadow-md hover:bg-gray-50 md:block"
-            aria-label="Rolar para direita"
-          >
-            <ChevronRightIcon className="h-6 w-6" />
-          </button>
-        )}
-      </div>
+      )}
     </div>
   );
 }

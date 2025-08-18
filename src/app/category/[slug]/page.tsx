@@ -19,17 +19,29 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
     return notFound();
   }
   const products = await db.query.productTable.findMany({
-      where: eq(productTable.categoryId, category.id),
-      with: {
-          variants: true,
-      }
+    where: eq(productTable.categoryId, category.id),
+    with: {
+      variants: true,
+    },
   });
 
   return (
     <>
       <Header />
-      <div className="space-y-6">
-        <ProductList title={category.name} products={products} />
+      <div className="mx-auto max-w-screen-xl px-4 py-8 md:px-8">
+        <div className="mb-8">
+          <h1 className="text-2xl font-bold md:text-3xl">{category.name}</h1>
+          <p className="text-muted-foreground mt-2">
+            Confira nossa seleção de {category.name.toLowerCase()}
+          </p>
+        </div>
+
+        <ProductList
+          title=""
+          products={products}
+          displayType="grid"
+          category={slug}
+        />
       </div>
     </>
   );

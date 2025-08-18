@@ -1,8 +1,7 @@
-"use";
+"use client";
 
 import { useQuery } from "@tanstack/react-query";
 import { ShoppingBasketIcon } from "lucide-react";
-import Link from "next/link";
 
 import { getCart } from "@/actions/get-cart";
 import { formatCentsToBRL } from "@/helpers/money";
@@ -17,6 +16,8 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "../ui/sheet";
+import CheckoutButton from "./cart-components/checkout-button";
+import DirectCheckoutLink from "./cart-components/direct-checkout-link";
 import CartItem from "./cart-item";
 
 const Cart = () => {
@@ -81,9 +82,10 @@ const Cart = () => {
                   <p>{formatCentsToBRL(cart?.totalPriceInCents ?? 0)}</p>
                 </div>
 
-                <Button className="mt-5 rounded-full" asChild>
-                  <Link href="/cart/identification">Finalizar compra</Link>
-                </Button>
+                <div>
+                  <CheckoutButton />
+                  <DirectCheckoutLink />
+                </div>
               </div>
             )}
           </div>

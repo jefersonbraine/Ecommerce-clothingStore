@@ -36,8 +36,12 @@ export function CartSummary({
           </p>
         </div>
         <div className="flex justify-between">
-          <p className="text-sm">Frete</p>
+          <p className="text-sm">Transporte e Manuseio</p>
           <p className="text-muted-foreground text-sm font-medium">GRÁTIS</p>
+        </div>
+        <div className="flex justify-between">
+          <p className="text-sm">Taxa Estimada</p>
+          <p className="text-muted-foreground text-sm font-medium">—</p>
         </div>
         <div className="flex justify-between">
           <p className="text-sm">Total</p>

@@ -17,16 +17,16 @@ const ProductItem = ({ product, textContainerClassName }: ProductItemProps) => {
   return (
     <Link
       href={`/product-variant/${firstVariant.slug}`}
-      className="flex w-full flex-col gap-3"
+      className="group flex w-full flex-col gap-3"
     >
-      <div className="group relative h-[180px] w-full overflow-hidden rounded-xl md:h-[260px] md:rounded-3xl">
+      <div className="relative h-[180px] w-full overflow-hidden rounded-xl shadow-sm transition-shadow duration-200 hover:shadow md:h-[260px] md:rounded-3xl">
         <Image
           src={firstVariant.imageUrl}
           alt={firstVariant.name}
           fill
           className="object-cover transition-transform group-hover:scale-105"
         />
-        <div className="absolute right-3 bottom-3 hidden md:block">
+        <div className="absolute right-3 bottom-3 hidden md:flex">
           <div className="rounded-full bg-white px-4 py-2 text-sm font-medium opacity-90 transition-opacity hover:opacity-100">
             Comprar
           </div>

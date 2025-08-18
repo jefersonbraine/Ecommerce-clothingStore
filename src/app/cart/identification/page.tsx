@@ -46,23 +46,35 @@ const IdentificationPage = async () => {
   return (
     <div className="flex min-h-screen flex-col">
       <Header />
-      <div className="flex-1 space-y-4 px-5 pb-10">
-        <Addresses
-          shippingAddresses={shippingAddresses}
-          defaultShippingAddressId={cart.shippingAddress?.id || null}
-        />
-        <CartSummary
-          subtotalInCents={cartTotalInCents}
-          totalInCents={cartTotalInCents}
-          products={cart.items.map((item) => ({
-            id: item.productVariant.id,
-            name: item.productVariant.product.name,
-            variantName: item.productVariant.name,
-            quantity: item.quantity,
-            priceInCents: item.productVariant.priceInCents,
-            imageUrl: item.productVariant.imageUrl,
-          }))}
-        />
+      <div className="container mx-auto px-5 pb-10">
+        <div className="flex flex-col gap-8 md:flex-row md:items-start md:gap-12">
+          {/* Left column - Addresses (Wider on desktop) */}
+          <div className="md:max-w-3xl md:flex-1">
+            <h1 className="mb-6 text-2xl font-bold md:text-3xl">
+              Identificação
+            </h1>
+            <Addresses
+              shippingAddresses={shippingAddresses}
+              defaultShippingAddressId={cart.shippingAddress?.id || null}
+            />
+          </div>
+
+          {/* Right column - Order Summary (Fixed width on desktop) */}
+          <div className="md:w-80 md:flex-shrink-0 lg:w-96">
+            <CartSummary
+              subtotalInCents={cartTotalInCents}
+              totalInCents={cartTotalInCents}
+              products={cart.items.map((item) => ({
+                id: item.productVariant.id,
+                name: item.productVariant.product.name,
+                variantName: item.productVariant.name,
+                quantity: item.quantity,
+                priceInCents: item.productVariant.priceInCents,
+                imageUrl: item.productVariant.imageUrl,
+              }))}
+            />
+          </div>
+        </div>
       </div>
       <Footer />
     </div>

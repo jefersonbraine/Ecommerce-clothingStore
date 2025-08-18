@@ -29,9 +29,9 @@ import Cart from "./cart";
 export const Header = () => {
   const { data: session } = authClient.useSession();
   return (
-    <header className="mx-auto flex max-w-screen-xl flex-col">
+    <header className="w-full bg-white">
       {/* Primeira linha do header - 3 partes: Saudação, Logo e Ícones */}
-      <div className="flex items-center justify-between p-5">
+      <div className="relative flex items-center justify-between px-5 py-4 md:px-48 lg:px-52">
         {/* Saudação à esquerda */}
         <div className="flex items-center">
           {!session?.user ? (
@@ -39,7 +39,7 @@ export const Header = () => {
               href="/authentication"
               className="text-sm font-medium hover:underline"
             >
-              Olá, Satoshi!
+              Olá, Faça seu login!
             </Link>
           ) : (
             <Sheet>
@@ -135,8 +135,18 @@ export const Header = () => {
         </div>
 
         {/* Logo centralizada */}
-        <Link href="/" className="absolute left-1/2 -translate-x-1/2 transform">
-          <Image src="/logo.svg" alt="BEWEAR" width={100} height={26.14} />
+        <Link
+          href="/"
+          className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 transform"
+          aria-label="Ir para a página inicial"
+        >
+          <Image
+            src="/logo.svg"
+            alt="BEWEAR"
+            width={100}
+            height={26.14}
+            priority
+          />
         </Link>
 
         {/* Ícones à direita */}
@@ -317,8 +327,8 @@ export const Header = () => {
       </div>
 
       {/* Menu de categorias embaixo - apenas para desktop */}
-      <div className="hidden md:block">
-        <div className="flex items-center justify-center space-x-12 py-4">
+      <div className="hidden border-b border-gray-200 md:block">
+        <div className="mx-auto flex max-w-screen-xl items-center justify-center space-x-12 px-48 py-4 lg:px-52">
           <Link
             href="/category/camisetas"
             className="text-sm font-medium hover:text-gray-500"
@@ -357,8 +367,6 @@ export const Header = () => {
           </Link>
         </div>
       </div>
-
-      {/* Removido menu mobile duplicado */}
     </header>
   );
 };
