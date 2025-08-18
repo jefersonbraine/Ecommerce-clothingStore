@@ -1,4 +1,4 @@
-# 🛍️ BEWEAR - E-commerce de Moda (📱 Responsivo)
+# 🛍️ E-commerce de Moda Masculina (📱 Responsivo)
 
 ![Banner da BEWEAR](public/banner-01.png)
 
