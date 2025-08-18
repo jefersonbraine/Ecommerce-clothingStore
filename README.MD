@@ -171,3 +171,9 @@ Para aprofundar seus conhecimentos nas tecnologias utilizadas:
 Este projeto está licenciado sob a licença MIT. Consulte o arquivo LICENSE para mais detalhes.
 
 Contribuições são bem-vindas! Sinta-se à vontade para abrir issues e pull requests.
+
+## 👏 Agradecimentos
+
+Este projeto foi desenvolvido com base no curso **Full Stack Club**, ministrado pelo professor **Filipe Rocha** ⭐.
+
+Um agradecimento especial ao instrutor e à comunidade do curso por todo o conhecimento compartilhado e suporte durante o desenvolvimento.
