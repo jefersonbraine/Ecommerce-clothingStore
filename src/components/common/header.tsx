@@ -328,40 +328,40 @@ export const Header = () => {
 
       {/* Menu de categorias embaixo - apenas para desktop */}
       <div className="hidden border-b border-gray-200 md:block">
-        <div className="mx-auto flex max-w-screen-xl items-center justify-center space-x-12 px-48 py-4 lg:px-52">
+        <div className="mx-auto flex max-w-screen-xl items-center justify-center overflow-x-auto px-4 py-4 md:px-8 lg:px-12">
           <Link
             href="/category/camisetas"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Camisetas
           </Link>
           <Link
             href="/category/bermuda-shorts"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Bermuda & Shorts
           </Link>
           <Link
             href="/category/calcas"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Calças
           </Link>
           <Link
             href="/category/jaquetas-moletons"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Jaquetas & Moletons
           </Link>
           <Link
             href="/category/tenis"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Tênis
           </Link>
           <Link
             href="/category/acessorios"
-            className="text-sm font-medium hover:text-gray-500"
+            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
           >
             Acessórios
           </Link>

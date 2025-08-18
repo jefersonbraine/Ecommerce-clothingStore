@@ -1,5 +1,8 @@
+"use client";
+
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
 import z from "zod";
@@ -35,8 +38,17 @@ type FormValues = z.infer<typeof formSchema>;
 
 const SignInForm = () => {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const callbackUrl = searchParams.get("callbackUrl") || "/";
+  const [callbackUrl, setCallbackUrl] = useState("/");
+
+  // Efeito para configurar o callbackUrl do lado do cliente
+  useEffect(() => {
+    // Obtendo o callbackUrl usando window.location para evitar problemas com useSearchParams
+    const callback =
+      typeof window !== "undefined"
+        ? new URL(window.location.href).searchParams.get("callbackUrl") || "/"
+        : "/";
+    setCallbackUrl(callback);
+  }, []);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -79,7 +91,6 @@ const SignInForm = () => {
   const handleSignInWithGoogle = async () => {
     await authClient.signIn.social({
       provider: "google",
-      redirectTo: callbackUrl,
     });
   };
 

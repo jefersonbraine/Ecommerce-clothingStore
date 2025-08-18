@@ -28,3 +28,6 @@ const Authentication = () => {
   );
 };
 export default Authentication;
+
+// Configuração para forçar renderização dinâmica e evitar problemas com pré-renderização
+export const dynamic = "force-dynamic";
