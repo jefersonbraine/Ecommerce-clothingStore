@@ -131,12 +131,8 @@ const Home = async () => {
                   sizes="100vw"
                   className="h-auto w-full rounded-3xl"
                 />
-                <div className="absolute top-6 left-0 w-full px-6">
-                  
-                </div>
-                <div className="absolute bottom-6 flex w-full justify-end px-6">
-                  
-                </div>
+                <div className="absolute top-6 left-0 w-full px-6"></div>
+                <div className="absolute bottom-6 flex w-full justify-end px-6"></div>
               </div>
               <div className="relative overflow-hidden rounded-3xl bg-slate-200">
                 <Image
@@ -147,9 +143,7 @@ const Home = async () => {
                   sizes="100vw"
                   className="h-auto w-full rounded-3xl"
                 />
-                <div className="absolute top-6 left-0 w-full px-6">
-                  
-                </div>
+                <div className="absolute top-6 left-0 w-full px-6"></div>
               </div>
             </div>
 
@@ -162,15 +156,11 @@ const Home = async () => {
                 width={0}
                 sizes="100vw"
                 className="h-full w-full rounded-3xl object-cover"
-                style={{ height: "100%"}}
+                style={{ height: "100%" }}
               />
-              <div className="absolute top-6 left-0 w-full px-6">
-                
-              </div>
+              <div className="absolute top-6 left-0 w-full px-6"></div>
               <div className="absolute bottom-6 flex w-full justify-end px-6">
-                <div className="self-end">
-                  
-                </div>
+                <div className="self-end"></div>
               </div>
             </div>
           </div>
@@ -204,3 +194,6 @@ const Home = async () => {
 };
 
 export default Home;
+
+// Configuração para forçar renderização dinâmica e evitar problemas com pré-renderização
+export const dynamic = "force-dynamic";

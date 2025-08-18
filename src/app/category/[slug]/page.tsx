@@ -48,3 +48,6 @@ const CategoryPage = async ({ params }: CategoryPageProps) => {
 };
 
 export default CategoryPage;
+
+// Configuração para forçar renderização dinâmica e evitar problemas com pré-renderização
+export const dynamic = "force-dynamic";

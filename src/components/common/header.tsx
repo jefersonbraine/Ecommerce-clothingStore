@@ -331,37 +331,37 @@ export const Header = () => {
         <div className="mx-auto flex max-w-screen-xl items-center justify-center overflow-x-auto px-4 py-4 md:px-8 lg:px-12">
           <Link
             href="/category/camisetas"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Camisetas
           </Link>
           <Link
             href="/category/bermuda-shorts"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Bermuda & Shorts
           </Link>
           <Link
             href="/category/calcas"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Calças
           </Link>
           <Link
             href="/category/jaquetas-moletons"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Jaquetas & Moletons
           </Link>
           <Link
             href="/category/tenis"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Tênis
           </Link>
           <Link
             href="/category/acessorios"
-            className="whitespace-nowrap px-3 text-sm font-medium hover:text-gray-500"
+            className="px-3 text-sm font-medium whitespace-nowrap hover:text-gray-500"
           >
             Acessórios
           </Link>

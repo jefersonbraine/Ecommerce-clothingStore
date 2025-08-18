@@ -4,7 +4,16 @@ import { drizzleAdapter } from "better-auth/adapters/drizzle";
 import { db } from "@/db";
 import * as schema from "@/db/schema";
 
+// Obter a chave secreta do ambiente ou usar um valor padrão apenas para desenvolvimento
+const authSecret =
+  process.env.AUTH_SECRET ||
+  process.env.BETTER_AUTH_SECRET ||
+  (process.env.NODE_ENV === "production"
+    ? undefined
+    : "desenvolvimento_local_nao_usar_em_producao");
+
 export const auth = betterAuth({
+  secret: authSecret,
   emailAndPassword: {
     enabled: true,
   },

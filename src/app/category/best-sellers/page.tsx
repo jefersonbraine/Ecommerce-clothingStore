@@ -34,3 +34,6 @@ const BestSellersPage = async () => {
 };
 
 export default BestSellersPage;
+
+// Configuração para forçar renderização dinâmica e evitar problemas com pré-renderização
+export const dynamic = "force-dynamic";
